@@ -28,6 +28,7 @@ $corners: 10px;
     background-color: $secondary-color;
     box-shadow: $shadow;
     border-radius: $corners;
+    cursor: pointer;
     &:focus {
       outline: none;
     }

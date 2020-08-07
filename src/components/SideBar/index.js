@@ -10,7 +10,24 @@ class index extends Component {
   render() {
     return (
       <div className="sidebar__container">
-        <p>hola</p>
+        <h3>Salary Rank</h3>
+        <ul>
+          <li>
+            <input type="checkbox" name="" id="" /> 10k - 20k
+          </li>
+          <li>
+            <input type="checkbox" name="" id="" /> 21k - 30k
+          </li>
+          <li>
+            <input type="checkbox" name="" id="" /> 31k - 40k
+          </li>
+          <li>
+            <input type="checkbox" name="" id="" /> 41k - 50k
+          </li>
+          <li>
+            <input type="checkbox" name="" id="" /> 51k - 60k
+          </li>
+        </ul>
       </div>
     );
   }
