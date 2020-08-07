@@ -1,0 +1,8 @@
+@import "../../../styles/sass/variables";
+
+.sidebar__container {
+  height: 100vh;
+  width: 250px;
+  color: green;
+  background-color: darken($color: #9b94c7, $amount: 0%);
+}
