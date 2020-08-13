@@ -23,18 +23,6 @@ app = Flask(__name__)
 def data():
     
     df = pd.read_csv('static/DataAnalyst.csv')
-
-    '''
-    df = df.dropna()
-    df = df.replace(-1,np.nan)
-    df = df.replace(-1.0,np.nan)
-    df = df.replace('-1',np.nan)
-    df['Job Title'], df['Department'] = df['Job Title'].str.split(',', 1).str
-    df['Easy Apply'] = df['Easy Apply'].fillna(False).astype(bool)
-    df.drop(['Salary Estimate'], axis = 1, inplace = True)
-    df.drop(['Competitors'], axis = 1, inplace = True)
-    df.drop(['Department'], axis = 1, inplace = True)
-    '''
     head  = df.head()
 
     for r in head.iterrows():
