@@ -11,13 +11,15 @@ from tabulate import tabulate
 global df
 
 df=[]
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:80085700@localhost:5432/jobby"
 #db = SQLAlchemy(app)
 
-
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @app.route('/data')
 def data():
