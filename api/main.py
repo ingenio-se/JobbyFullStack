@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response,redirect,render_template
+from flask import Flask, request, make_response,redirect,render_template,url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import json
@@ -19,7 +19,7 @@ app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    return redirect(url_for('static', filename='index.html'))
 
 @app.route('/data')
 def data():
