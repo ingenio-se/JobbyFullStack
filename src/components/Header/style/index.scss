@@ -1,7 +1,5 @@
 @import "../../../styles/sass/variables";
 
-$corners: 10px;
-
 .header__container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -23,14 +21,6 @@ $corners: 10px;
     }
   }
   button {
-    height: 40px;
-    width: 160px;
-    background-color: $secondary-color;
-    box-shadow: $shadow;
-    border-radius: $corners;
-    cursor: pointer;
-    &:focus {
-      outline: none;
-    }
+    @include buttons(40px, 160px);
   }
 }

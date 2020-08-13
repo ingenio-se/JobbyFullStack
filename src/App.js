@@ -1,14 +1,21 @@
 import React from "react";
 import "./App.css";
-import Header from "./components/Header";
-import Sidebar from "./components/SideBar";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+import Home from "./components/Home";
+import JobView from "./components/JobView";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Sidebar />
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        {/* <Route exact path="/" component={Badges} /> */}
+        <Route exact path="/job/1" component={JobView} />
+        {/* <Route exact path="/job/:jobId" component={BadgeDetails} /> */}
+        {/* <Route component={NotFound} /> */}
+      </Switch>
+    </BrowserRouter>
   );
 }
 

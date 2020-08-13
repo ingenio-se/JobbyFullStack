@@ -1,0 +1,58 @@
+@import "../../../styles/sass/variables";
+
+.body__cont {
+  display: flex;
+  height: 430px;
+  justify-content: center;
+  align-items: center;
+}
+
+.job_container {
+  height: 380px;
+  width: 1000px;
+  background-color: $cards-bg;
+  border-radius: 8px;
+  box-shadow: $shadow;
+  h2 {
+    margin: 18px 0 20px 80px;
+    padding-top: 10px;
+  }
+  ul {
+    width: 85%;
+    display: grid;
+    margin: 8px 0 60px 20px;
+    padding: 0;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    justify-content: left;
+    align-items: center;
+    li {
+      font-size: 12px;
+      text-align: center;
+      list-style-type: none;
+    }
+  }
+  h5 {
+    margin: 10px 0 10px 80px;
+  }
+  button {
+    @include buttons(30px, 80px);
+  }
+  .apply {
+    margin: 150px 120px 0 260px;
+  }
+  .back {
+    margin: 150px auto 0 200px;
+  }
+}
+
+ul li {
+  span {
+    img {
+      width: 10px;
+    }
+  }
+}
+
+ul li:nth-child(3) {
+  justify-self: end;
+}

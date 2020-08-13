@@ -1,10 +1,11 @@
 @import "../../../styles/sass/variables";
 
 .sidebar__container {
-  height: 100vh;
+  height: bottom;
   width: 250px;
-  background-color: darken($color: #9b94c7, $amount: 0%);
+  background-color: $tertiary-color;
   text-align: center;
+  color: white;
   h3 {
     margin: 0;
     padding-top: 30px;
@@ -12,5 +13,11 @@
   ul {
     list-style-type: none;
     padding: 0;
+    li {
+      margin-top: 5px;
+    }
+  }
+  input {
+    cursor: pointer;
   }
 }
