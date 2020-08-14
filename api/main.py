@@ -124,6 +124,60 @@ def limpiar():
 
     print("Datos limpios")
 
+def rango_de_salarios():
+    range_slider = widgets.FloatRangeSlider(
+                                            value=[0., +100.],
+                                            min=10., max=+150., step=5,
+                                            description='\$ - $$$:',
+                                            readout_format='.1f',
+                                            )
+    range_slider
+    x,y = range_slider.value
+    a = int(x*1000)
+    b = int(y*1000)
+    rango = b-a
+
+    df_final1 = df.drop(df[df['salary_estimate_l1'] <= a].index)
+    df_final2 = df.drop(df[df['salary_estimate_l2'] <= (a+rango)].index)
+
+    df_salary = pd.concat([df_final1,df_final2]).drop_duplicates(keep=False)
+    df_salary.head()
+def calificacion_empleo():
+    df_fun = df_salary
+    df_fun.rating = df_fun.rating.fillna(1)
+    col = df_fun.loc[: , "salary_estimate_l1":"salary_estimate_l2"]
+    df_fun['salary_mean'] = col.mean(axis=1)
+    
+    #AQUI SE ASIGNAN LAS ESTRELLAS
+    df_fun['rating_val'] = df_fun['rating']*0.1
+    df_fun['salary_mean_val'] = df_fun['salary_mean']*((1/10000000)*(4**3))
+    df_fun['ESTRELLAS'] = round(((df_fun['salary_mean_val'] + df_fun['rating_val'])/.255),1)
+
+    #DATASET ORDENADO POR ESTRELLAS
+    df_fun_s = df_fun.sort_values('ESTRELLAS', ascending = False)
+    df_fun_s.drop(['easy_apply'], axis = 1, inplace = True)
+    #df_fun_s.drop(['salary_mean'], axis = 1, inplace = True)
+    df_fun_s.drop(['rating_val'], axis = 1, inplace = True)
+    df_fun_s.drop(['salary_mean_val'], axis = 1, inplace = True)
+    df_fun_s.tail()
+
+def grafica_empleo():
+    not_now = df_fun_s[["job_title","job_description","ESTRELLAS", 'salary_mean']]
+
+    ## INSERTAR BUSQUEDA ##
+
+    not_now['job_description'] = not_now['job_description']
+    not_now['joined_search'] = not_now['job_title'].str.lower() + str(" ") + not_now['job_description'].str.lower()
+    busqueda = title_textbox.value
+    not_now = not_now[not_now['joined_search'].str.contains(busqueda)]
+    not_now["ESTRELLAS"] = not_now["ESTRELLAS"].astype(dtype = int)
+    graph_estrella = not_now["ESTRELLAS"].value_counts()
+    graph_estrella = graph_estrella.sort_index()
+    graph_estrella.plot.pie()
+    graph_salario = not_now[['salary_mean',"ESTRELLAS"]]
+    graph_salario = graph_salario.sort_values(by =  'salary_mean')
+    graph_salario.plot.kde(x='ESTRELLAS', y = 'salary_mean')
+
 def load():
     global df
     df = pd.read_csv('static/DataAnalyst.csv')
@@ -132,3 +186,4 @@ def load():
 if __name__ == '__main__':
    
     app.run(port = 5000, debug = True)
+    
