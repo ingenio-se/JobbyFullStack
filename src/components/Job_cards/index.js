@@ -47,10 +47,10 @@ class index extends Component {
             </li>
           </ul>
         </section>
-        <h5>{job[5].slice(0, 100)}
+        <h5>{job[5].slice(0, 100) + "..."}
           
         </h5>
-        <Link className="text-reset text-decoration-none" to={`/job/1`}>
+        <Link className="text-reset text-decoration-none" to={`/job/`+ job[6]}>
           <button>More...</button>
         </Link>
       </div>

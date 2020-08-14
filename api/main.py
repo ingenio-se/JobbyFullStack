@@ -65,6 +65,7 @@ def my_view_func(keyword):
         job.append(jobs['salary_estimate'][str(i)])
         job.append(jobs['rating'][str(i)])
         job.append(jobs['job_description'][str(i)])
+        job.append(i)
         jobsf.append(job)
     return jsonify(jobsf)
    # return render_template('datos.html',datos =jobs)
