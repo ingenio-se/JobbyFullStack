@@ -66,10 +66,17 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
+<<<<<<< HEAD
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
+=======
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+>>>>>>> f99b6811a235d675a0c076bec63ce77967d58a15
     "start-api": "cd api && venv/bin/flask run --no-debugger"
   },
   "eslintConfig": {

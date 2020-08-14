@@ -8,42 +8,48 @@ import money from "../Job_cards/assets/money.svg";
 import target from "../Job_cards/assets/target.svg";
 
 export default class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      job : props.job
+   }
+   console.log(props.job)
+  }
   static propTypes = {
     prop: PropTypes,
   };
 
   render() {
+   
     return (
       <div className="job_container">
-        <h2>Data Science</h2>
+        <h2>{this.state.job[0][0] }</h2>
         <section className="card-aspects__container">
           <ul>
             <li>
               <span>
-                <img src={location} alt="location" /> New York, NY
+                <img src={location} alt="location" /> {this.state.job[0][1] }
               </span>
             </li>
             <li>
               <span>
-                <img src={building} alt="building" /> Vera Institute of justice
-                3.2
+                <img src={building} alt="building" /> {this.state.job[0][2] }
               </span>
             </li>
             <li>
               <span>
-                <img src={money} alt="money" /> $37K-$66K (Glassdoor est.)
+                <img src={money} alt="money" /> {this.state.job[0][3] }
               </span>
             </li>
             <li>
               <span>
-                <img src={target} alt="target" /> 3.2
+                <img src={target} alt="target" /> {this.state.job[0][4] }
               </span>
             </li>
           </ul>
         </section>
         <h5>
-          Are you eager to roll up your sleeves and harness data to drive policy
-          change? Do you enjoy sifting ...
+        {this.state.job[0][5] }
         </h5>
         <button className="apply">Apply</button>
         <Link className="text-reset text-decoration-none" to={`/`}>

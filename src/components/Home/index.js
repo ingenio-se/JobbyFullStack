@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Header from "../Header";
 import Sidebar from "../SideBar";
 import Cards from "../Job_cards";
+import axios from 'axios';
 
 class index extends Component {
   constructor(props) {
@@ -22,14 +23,32 @@ class index extends Component {
   };
   handleJobs(jobs){
     this.setState({
+      jobs: [],
+    }, () => {
+    this.setState({
       jobs: jobs
     })
+  });
+  }
+  componentDidMount(){
+    /*
+    let url = '/search/python'
+    axios.get(url)
+      .then(resp => {
+          console.log(resp.data);
+          this.setState({
+              jobs: resp.data,
+          });
+          
+      })
+      .catch(err => {
+          console.log(err)
+      })
+    */
   }
   render() {
     const { jobs } = this.state;
-    jobs.map((item) =>
-        console.log(item)
-    );
+    console.log(jobs)
    
     
     return (
@@ -38,7 +57,8 @@ class index extends Component {
         <div className="body__container">
           <Sidebar />
           <section className="cards__cont">
-            {jobs.map((item) =>
+            { 
+            jobs.map((item) =>
                 <Cards job={item}/>
             )}
             
