@@ -42,7 +42,7 @@ class index extends Component {
   });
   }
   render() {
-    if (this.state.job !=''){
+    if (this.state.job !==''){
     return (
       <div className="App">
         <Header />

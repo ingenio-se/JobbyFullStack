@@ -145,6 +145,15 @@ def limpiar():
     df_new=df_new[cols]
 
     df=df_new
+    '''
+    #AQUI SE ASIGNAN LAS ESTRELLAS
+    df['rating_val'] = df['rating']*0.1
+    df['salary_mean_val'] = df['salary_mean']*((1/10000000)*(4**3))
+    df['ESTRELLAS'] = round(((df['salary_mean_val'] + df['rating_val'])/.255),1)
+
+    #DATASET ORDENADO POR ESTRELLAS
+    df = df.sort_values('ESTRELLAS', ascending = False)
+    '''
 
     print("Datos limpios")
 
