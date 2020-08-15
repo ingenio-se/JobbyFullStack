@@ -6,24 +6,57 @@ import location from "../Job_cards/assets/location.svg";
 import building from "../Job_cards/assets/building.svg";
 import money from "../Job_cards/assets/money.svg";
 import target from "../Job_cards/assets/target.svg";
+import api from "../../ApiUrl";
 
-export default class index extends Component {
+class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      job : props.job
+      job : props.job,
+      error: null,
+      isLoaded: false,
+      data: [],
    }
    console.log(props.job)
   }
   static propTypes = {
     prop: PropTypes,
   };
-
+  componentDidMount() {
+    const children = this.props.children;
+    fetch(api(children)).then(
+      (result) => {
+        console.log(result);
+        this.setState({
+          isLoaded: true,
+          data: result,
+        });
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error,
+        });
+      }
+    );
+  }
   render() {
-   
+    const { error, isLoaded } = this.state;
+    const { url } = this.state.data;
+    if (error) {
+      console.log(error.message);
+      return <h1>Oops, data no disponible</h1>;
+    } else if (!isLoaded) {
+      return <h1>Loading...</h1>;
+    } else {
     return (
       <div className="job_container">
-        <h2>{this.state.job[0][0] }</h2>
+        <div>
+        <article>
+              <h2>{this.state.job[0][0] }</h2>
+              <img src={url} alt="logo" />
+        </article>
+       
         <section className="card-aspects__container">
           <ul>
             <li>
@@ -51,11 +84,16 @@ export default class index extends Component {
         <h5>
         {this.state.job[0][5] }
         </h5>
-        <button className="apply">Apply</button>
-        <Link className="text-reset text-decoration-none" to={`/`}>
-          <button className="back">Back</button>
-        </Link>
+        <section className="buttons">
+              <button className="apply">Apply</button>
+              <Link className="text-reset text-decoration-none" to={`/`}>
+                <button className="back">Back</button>
+              </Link>
+        </section>
       </div>
+    </div>
     );
+    }
   }
 }
+export default index;

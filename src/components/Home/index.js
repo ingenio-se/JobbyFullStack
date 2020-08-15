@@ -11,7 +11,7 @@ class index extends Component {
    // console.log(props)
     this.state = {
        search : '',
-       jobs:[]
+       jobs:''
     }
     // bind
     
@@ -31,41 +31,47 @@ class index extends Component {
   });
   }
   componentDidMount(){
-    /*
-    let url = '/search/python'
-    axios.get(url)
-      .then(resp => {
-          console.log(resp.data);
-          this.setState({
-              jobs: resp.data,
-          });
-          
-      })
-      .catch(err => {
-          console.log(err)
-      })
-    */
+    
+    this.setState({
+      jobs: '',
+    }, () => {
+      let url = '/top/10'
+      axios.get(url)
+        .then(resp => {
+            console.log(resp.data);
+            this.handleJobs(resp.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    
+    });
+    
   }
   render() {
     const { jobs } = this.state;
     console.log(jobs)
    
-    
+    if (jobs != '' ){
     return (
       <div className="App">
         <Header handleJobs ={this.handleJobs}/>
         <div className="body__container">
-          <Sidebar />
+          <Sidebar handleJobs ={this.handleJobs}/>
           <section className="cards__cont">
             { 
             jobs.map((item) =>
-                <Cards job={item}/>
+                <Cards job={item} children={item[1]}/>
             )}
             
           </section>
         </div>
       </div>
     );
+            }
+            else{
+              return (<div></div>);
+            }
   }
 }
 
