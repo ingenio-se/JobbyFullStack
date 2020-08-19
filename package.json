@@ -52,6 +52,7 @@
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.3",
     "resolve": "1.15.0",
     "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.2",
@@ -66,7 +67,7 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "set PORT=5000 && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "heroku-postbuild": "cd client && npm install && npm run build",

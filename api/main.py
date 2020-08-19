@@ -211,6 +211,24 @@ def grafica_empleo():
     graph_salario = graph_salario.sort_values(by =  'salary_mean')
     graph_salario.plot.kde(x='ESTRELLAS', y = 'salary_mean')
 
+def skills():
+    new_clean = df
+    new_clean['job_description'] = new_clean['job_description'].str.replace('\n',' ')
+
+    ##EL DATAFRAME xx NOS DARA LAS PALABRAS MAS REPETIDAS
+    xx= pd.Series(' '.join(new_clean['job_description']).lower().split()).value_counts()[:1000]
+    ####################################################### 
+
+    skills = {"python", "python,", "sql", "SQL", "statistics", 'tableau', "big data", "excel", "machine learning", "databases", "r", "analyst", "microsoft", "leadership","ETL"}
+    def word_finder(x):
+        df_words = set(x.split(' '))
+        extract_words =  skills.intersection(df_words)
+        return ', '.join(extract_words)
+    
+    new_clean['skills'] = new_clean["job_description"].apply(word_finder)
+    new_clean.head()
+
+
 def load():
     global df
     df = pd.read_csv('static/DataAnalyst.csv')
