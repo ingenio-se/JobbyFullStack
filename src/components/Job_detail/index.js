@@ -12,12 +12,12 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      job : props.job,
+      job: props.job,
       error: null,
       isLoaded: false,
       data: [],
-   }
-   console.log(props.job)
+    };
+    console.log(props.job);
   }
   static propTypes = {
     prop: PropTypes,
@@ -49,50 +49,50 @@ class index extends Component {
     } else if (!isLoaded) {
       return <h1>Loading...</h1>;
     } else {
-    return (
-      <div className="job_container">
-        <div>
-        <article>
-              <h2>{this.state.job[0][0] }</h2>
+      return (
+        <div className="job_container">
+          <div>
+            <article>
+              <h2>{this.state.job[0][0]}</h2>
               <img src={url} alt="logo" />
-        </article>
-       
-        <section className="card-aspects__container">
-          <ul>
-            <li>
-              <span>
-                <img src={location} alt="location" /> {this.state.job[0][1] }
-              </span>
-            </li>
-            <li>
-              <span>
-                <img src={building} alt="building" /> {this.state.job[0][2] }
-              </span>
-            </li>
-            <li>
-              <span>
-                <img src={money} alt="money" /> {this.state.job[0][3] }
-              </span>
-            </li>
-            <li>
-              <span>
-                <img src={target} alt="target" /> {this.state.job[0][4] }
-              </span>
-            </li>
-          </ul>
-        </section>
-        <h5>
-        {this.state.job[0][5] }
-        </h5>
-        <section className="buttons">
-              <button className="apply">Apply</button>
-              <Link className="text-reset text-decoration-none" to={`/`}>
-                <button className="back">Back</button>
-              </Link>
-        </section>
-      </div>
-    </div>
-    );
+            </article>
+
+            <section className="card-aspects__container">
+              <ul>
+                <li>
+                  <span>
+                    <img src={location} alt="location" /> {this.state.job[0][1]}
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    <img src={building} alt="building" /> {this.state.job[0][2]}
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    <img src={money} alt="money" /> {this.state.job[0][3]}
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    <img src={target} alt="target" /> {this.state.job[0][4]}
+                  </span>
+                </li>
+              </ul>
+            </section>
+            <section className="scrollable">
+              <p>{this.state.job[0][5]}</p>
+              <section className="buttons">
+                <button className="apply">Apply</button>
+                <Link className="text-reset text-decoration-none" to={`/`}>
+                  <button className="back">Back</button>
+                </Link>
+              </section>
+            </section>
+          </div>
+        </div>
+      );
     }
   }
 }
