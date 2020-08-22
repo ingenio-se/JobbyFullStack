@@ -1,5 +1,7 @@
 @import "../../../styles/sass/variables";
 
+
+
 .body__cont {
   display: flex;
   height: 430px;
@@ -13,35 +15,50 @@
   background-color: $cards-bg;
   border-radius: 8px;
   box-shadow: $shadow;
-  h2 {
-    margin: 18px 0 20px 80px;
-    padding-top: 10px;
+  & > div {
+    height: 340px;
+    width: 860;
+    padding: 15px 80px 15px 80px;
+    display: grid;
+    grid-template-rows: 20% 10% 55% 15%;
+  }
+  article {
+    width: inherit;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, (minmax(100px, 1fr)));
+    h2 {
+      grid-column: 1 / 2;
+      margin: 0px;
+      padding: 0;
+    }
+    img {
+      grid-column: 2 / 3;
+    }
   }
   ul {
-    width: 85%;
+    width: inherit;
     display: grid;
-    margin: 8px 0 60px 20px;
+    margin: 0;
     padding: 0;
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    justify-content: left;
+    justify-content: start;
     align-items: center;
     li {
       font-size: 12px;
-      text-align: center;
       list-style-type: none;
     }
   }
   h5 {
-    margin: 10px 0 10px 80px;
+    margin: 10px 0;
   }
   button {
     @include buttons(30px, 80px);
   }
-  .apply {
-    margin: 150px 120px 0 260px;
-  }
-  .back {
-    margin: 150px auto 0 200px;
+  .buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: end center;
   }
 }
 
@@ -51,8 +68,4 @@ ul li {
       width: 10px;
     }
   }
-}
-
-ul li:nth-child(3) {
-  justify-self: end;
 }

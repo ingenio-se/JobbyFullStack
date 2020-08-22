@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Header from "../Header";
 import Sidebar from "../SideBar";
 import Cards from "../Job_cards";
+import axios from 'axios';
 
 class index extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class index extends Component {
    // console.log(props)
     this.state = {
        search : '',
-       jobs:[]
+       jobs:''
     }
     // bind
     
@@ -22,30 +23,55 @@ class index extends Component {
   };
   handleJobs(jobs){
     this.setState({
+      jobs: [],
+    }, () => {
+    this.setState({
       jobs: jobs
     })
+  });
+  }
+  componentDidMount(){
+    
+    this.setState({
+      jobs: '',
+    }, () => {
+      let url = '/top/10'
+      axios.get(url)
+        .then(resp => {
+            console.log(resp.data);
+            this.handleJobs(resp.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    
+    });
+    
   }
   render() {
     const { jobs } = this.state;
-    jobs.map((item) =>
-        console.log(item)
-    );
+    console.log(jobs)
    
-    
+    if (jobs != '' ){
     return (
       <div className="App">
         <Header handleJobs ={this.handleJobs}/>
         <div className="body__container">
-          <Sidebar />
+          <Sidebar handleJobs ={this.handleJobs}/>
           <section className="cards__cont">
-            {jobs.map((item) =>
-                <Cards job={item}/>
+            { 
+            jobs.map((item) =>
+                <Cards job={item} children={item[1]}/>
             )}
             
           </section>
         </div>
       </div>
     );
+            }
+            else{
+              return (<div></div>);
+            }
   }
 }
 

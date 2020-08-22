@@ -17,6 +17,24 @@ app = Flask(__name__, static_folder='../build', static_url_path='/')
 #app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:80085700@localhost:5432/jobby"
 #db = SQLAlchemy(app)
 
+def getArray(jobs):
+    jobs = jobs.to_json()
+    jobs = json.loads(jobs)
+    jobsf = []
+   
+    
+    for i in range(0,len(jobs['job_title'])):
+        job=[]
+        job.append(jobs['job_title'][str(i)])
+        job.append(jobs['location'][str(i)])
+        job.append(jobs['company_name'][str(i)])
+        job.append(jobs['salary_estimate'][str(i)])
+        job.append(jobs['rating'][str(i)])
+        job.append(jobs['job_description'][str(i)])
+        job.append(jobs['job_number'][str(i)])
+        jobsf.append(job)
+    return jobsf
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
@@ -47,25 +65,45 @@ def locations():
     
     return render_template('datos.html',datos =locations)
 
+@app.route('/salary/<keyword>')
+def salary(keyword):
+    load()
+    limpiar()
+    salary = keyword.split("-")
+    l1 = str(int(salary[0])*1000)
+    l2 = str(int(salary[1])*1000)
+    print(l1)
+    print(l2)
+    jobs =sqldf("select * from df where  salary_estimate_l1 < "+l1+" and salary_estimate_l2 > "+l2)
+    #jobs =sqldf("select * from df where (salary_estimate_l1 > "+l1+" and salary_estimate_l2 > "+l2+") or (salary_estimate_l1 < "+l1+" and salary_estimate_l2 > "+l2+") or (salary_estimate_l1 < "+l1+" and salary_estimate_l2 < "+l2)
+    jobsf = getArray(jobs)
+    print(jobsf)
+    return jsonify(jobsf)
+
+@app.route('/top/<keyword>')
+def top(keyword):
+    load()
+    limpiar()
+    jobs =sqldf("select * from df order by salary_estimate_l2 desc limit " + keyword)
+    jobsf = getArray(jobs)
+    print(jobsf)
+    return jsonify(jobsf)
+
+@app.route('/get/<keyword>')
+def getId(keyword):
+    load()
+    limpiar()
+    jobs =sqldf("select * from df where job_number = " + keyword )
+    jobsf = getArray(jobs)
+    return jsonify(jobsf)
+
 @app.route('/search/<keyword>')
-def my_view_func(keyword):
+def searchKey(keyword):
     load()
     limpiar()
     jobs =sqldf("select * from df where job_title like '%" + keyword + "%' or Location like '%" + keyword + "%'")
-    jobs = jobs.to_json()
-    jobs = json.loads(jobs)
-    jobsf = []
-   
+    jobsf = getArray(jobs)
     
-    for i in range(0,len(jobs['job_title'])):
-        job=[]
-        job.append(jobs['job_title'][str(i)])
-        job.append(jobs['location'][str(i)])
-        job.append(jobs['company_name'][str(i)])
-        job.append(jobs['salary_estimate'][str(i)])
-        job.append(jobs['rating'][str(i)])
-        job.append(jobs['job_description'][str(i)])
-        jobsf.append(job)
     return jsonify(jobsf)
    # return render_template('datos.html',datos =jobs)
 
@@ -91,6 +129,7 @@ def limpiar():
     df['salary_estimate_l2'] = df['salary_estimate_l2'].fillna(0)
     df['salary_estimate_l2']=df['salary_estimate_l2'].astype(str).astype(int)
     df['Founded']=df['Founded'].fillna(0).astype(int)
+    df['job_number'] = df.index
     
     df_new = df.rename(columns={'Job Title': 'job_title',
                                 'Salary Estimate':'salary_estimate',
@@ -113,7 +152,7 @@ def limpiar():
     
     #df_new.drop(['Salary Estimate'], axis = 1, inplace = True)
     
-    cols =['job_title','salary_estimate','salary_estimate_l1','salary_estimate_l2',
+    cols =['job_number','job_title','salary_estimate','salary_estimate_l1','salary_estimate_l2',
           'job_description','rating','company_name','location',
           'headquarters','size','founded',
           'type_ownership','industry','sector','revenue','competitors','easy_apply']

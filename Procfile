@@ -1,1 +1,1 @@
-web: gunicorn -b :5000 --pythonpath api api:app
+web: gunicorn wsgi:app

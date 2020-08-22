@@ -27,18 +27,24 @@ class index extends Component {
     });
  }
  search(){
-  let url = '/search/'+this.state.search
-  axios.get(url)
+  this.setState({
+    jobs: '',
+  }, () => {
+    let url = '/search/'+this.state.search
+    axios.get(url)
       .then(resp => {
           console.log(resp.data);
           this.setState({
               jobs: resp.data,
           });
-          this.props.handleJobs(resp.data);
+          this.props.handleJobs(this.state.jobs);
       })
       .catch(err => {
           console.log(err)
       })
+  
+  });
+  
  }
   render() {
     return (
