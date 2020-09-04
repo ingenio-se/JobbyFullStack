@@ -8,36 +8,91 @@ import numpy as np
 from pandasql import sqldf
 from tabulate import tabulate
 
+
 global df
 
 df=[]
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:80085700@localhost:5432/jobby"
-#db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:80085700@localhost:5432/jobby"
+db = SQLAlchemy(app)
 
-def getArray(jobs):
-    jobs = jobs.to_json()
-    jobs = json.loads(jobs)
-    jobsf = []
-   
-    
-    for i in range(0,len(jobs['job_title'])):
-        job=[]
-        job.append(jobs['job_title'][str(i)])
-        job.append(jobs['location'][str(i)])
-        job.append(jobs['company_name'][str(i)])
-        job.append(jobs['salary_estimate'][str(i)])
-        job.append(jobs['rating'][str(i)])
-        job.append(jobs['job_description'][str(i)])
-        job.append(jobs['job_number'][str(i)])
-        jobsf.append(job)
-    return jobsf
+
+
+#------------------------------ROUTES----------------------------------
+
 
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
+
+#--------------------USERS-------------------------------------
+class UsersModel(db.Model):
+    __tablename__ = 'users'
+
+    user_id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String())
+    last_name = db.Column(db.String())
+    email = db.Column(db.String())
+    password= db.Column(db.String())
+
+    def __init__(self, user_id,first_name,last_name,email,password):
+        self.user_id = id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.password = password
+
+def maxId(table):
+    queryId ="select max(user_id) as max from " + table
+    sql = text(queryId)
+    result = db.engine.execute(sql)
+  
+    id= [row for row in result]
+    if isinstance(id[0][0], int):
+        return int(id[0][0])+1
+    else:
+        return 1
+
+@app.route('/registerUser', methods=['POST'])
+def register():
+    
+        
+    first_name= request.form['first_name']
+    last_name= request.form['last_name']
+    email= request.form['email']
+    password= request.form['password']
+
+    user_id=maxId('users')
+
+    query ="insert into users values ("+ str(user_id) + ",'" + str(email) + "','" +  str(first_name) + "','" + str(last_name) + "','" + str(password) +"')"
+    sql = text(query)
+    result = db.engine.execute(sql)
+        
+    return jsonify("User created")
+
+@app.route('/loginUser', methods=['POST'])
+def login():
+    email= request.form['email']
+    password= request.form['password']
+
+
+    query ="select * from users where email ='"+ str(email) +"'"
+    sql = text(query)
+    result = db.engine.execute(sql)
+
+    #results=[]
+    for row in result:
+        #l =[row[0],row[1],row[2],row[3],currencyName(row[4])]
+        #results.append(l)
+        print(row[4])
+        if row[4] == password:
+            return jsonify("Bienvenido "+row[2])
+        else:
+            return jsonify("Password incorrect")
+    return jsonify("User not found")
 
 @app.route('/data')
 def data():
@@ -77,7 +132,7 @@ def salary(keyword):
     jobs =sqldf("select * from df where  salary_estimate_l1 < "+l1+" and salary_estimate_l2 > "+l2)
     #jobs =sqldf("select * from df where (salary_estimate_l1 > "+l1+" and salary_estimate_l2 > "+l2+") or (salary_estimate_l1 < "+l1+" and salary_estimate_l2 > "+l2+") or (salary_estimate_l1 < "+l1+" and salary_estimate_l2 < "+l2)
     jobsf = getArray(jobs)
-    print(jobsf)
+    #print(jobsf)
     return jsonify(jobsf)
 
 @app.route('/top/<keyword>')
@@ -86,7 +141,7 @@ def top(keyword):
     limpiar()
     jobs =sqldf("select * from df order by salary_estimate_l2 desc limit " + keyword)
     jobsf = getArray(jobs)
-    print(jobsf)
+    #print(jobsf)
     return jsonify(jobsf)
 
 @app.route('/get/<keyword>')
@@ -107,6 +162,28 @@ def searchKey(keyword):
     return jsonify(jobsf)
    # return render_template('datos.html',datos =jobs)
 
+
+
+
+#---------------------------AUXILIAR FUNCTIONS --------------------------
+
+def getArray(jobs):
+    jobs = jobs.to_json()
+    jobs = json.loads(jobs)
+    jobsf = []
+   
+    
+    for i in range(0,len(jobs['job_title'])):
+        job=[]
+        job.append(jobs['job_title'][str(i)])
+        job.append(jobs['location'][str(i)])
+        job.append(jobs['company_name'][str(i)])
+        job.append(jobs['salary_estimate'][str(i)])
+        job.append(jobs['rating'][str(i)])
+        job.append(jobs['job_description'][str(i)])
+        job.append(jobs['job_number'][str(i)])
+        jobsf.append(job)
+    return jobsf
 def limpiar():
     global df
     df = df.dropna()
@@ -168,6 +245,7 @@ def load():
     df = pd.read_csv('static/DataAnalyst.csv')
     print("Datos cargados")
 
-if __name__ == '__main__':
-   
+
+if __name__ == '__main__':  
     app.run(port = 5000, debug = True)
+

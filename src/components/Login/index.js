@@ -5,13 +5,48 @@ import { Link } from "react-router-dom";
 // import "./style/index.scss";
 
 export default class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+   }
+  
+   this.handleChange = this.handleChange.bind(this);
+   this.handleSubmit = this.handleSubmit.bind(this);
+  }
   static propTypes = {
     prop: PropTypes,
   };
-
+  handleChange({ target }) {
+    this.setState({
+        [target.id]: target.value
+    });
+    //console.log(this.state)
+  }
+  handleSubmit(ev){
+    ev.preventDefault();
+  
+      const data = new FormData();
+      data.append('email', this.state.email);
+      data.append('password', this.state.password);
+  
+      fetch('loginUser', {
+        method: 'POST',
+        body: data,
+      }).then((response) => response.json()).then((responseJson) => {
+        alert(responseJson);
+        if (responseJson.includes("Bienvenido")){
+          window.open('job/create',"_self")
+        }
+        /*response.json().then((body) => {
+          this.setState({ imageURL: `http://localhost:8000/${body.file}` });
+        });*/
+      });
+  }
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <h3>Sign In</h3>
 
         <div className="form-group">
@@ -21,6 +56,7 @@ export default class index extends Component {
             className="form-control"
             placeholder="Enter email"
             id="email"
+            onChange = {this.handleChange}
           />
         </div>
 
@@ -31,6 +67,7 @@ export default class index extends Component {
             className="form-control"
             placeholder="Enter password"
             id="password"
+            onChange = {this.handleChange}
           />
         </div>
 
@@ -46,7 +83,7 @@ export default class index extends Component {
             </label>
           </div>
         </div>
-        <Link to={`/`}>
+        {/*<Link to={`/`}>*/}
           <button
             type="submit"
             className="btn btn-primary btn-block"
@@ -54,7 +91,7 @@ export default class index extends Component {
           >
             Sign In
           </button>
-        </Link>
+       {/* </Link>*/}
         <p className="forgot-password text-right" id="pwd-forgot">
           Forgot <a href="#">password?</a>
         </p>
