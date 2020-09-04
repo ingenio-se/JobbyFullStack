@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-// import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-// import "./style/index.scss";
+import "./style/index.scss";
 
 export default class index extends Component {
   constructor(props) {
@@ -46,6 +45,7 @@ export default class index extends Component {
   }
   render() {
     return (
+<<<<<<< HEAD
       <form onSubmit={this.handleSubmit}>
         <h3>Sign In</h3>
 
@@ -71,18 +71,34 @@ export default class index extends Component {
           />
         </div>
 
-        <div className="form-group">
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-            />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
-            </label>
-          </div>
+
+            <div className="form-group">
+              <div className="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  className="custom-control-input"
+                  id="customCheck1"
+                />
+                <label className="custom-control-label" htmlFor="customCheck1">
+                  Remember me
+                </label>
+              </div>
+            </div>
+            <Link to={`/`}>
+              <button
+                type="submit"
+                className="btn btn-primary btn-block"
+                id="submit-btn"
+              >
+                Sign In
+              </button>
+            </Link>
+            <p className="forgot-password text-right" id="pwd-forgot">
+              Forgot <a href="#">password?</a>
+            </p>
+          </form>
         </div>
+
         {/*<Link to={`/`}>*/}
           <button
             type="submit"
@@ -96,6 +112,9 @@ export default class index extends Component {
           Forgot <a href="#">password?</a>
         </p>
       </form>
+
+      </div>
+
     );
   }
 }
