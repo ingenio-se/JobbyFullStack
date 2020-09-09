@@ -46,7 +46,10 @@ class UsersModel(db.Model):
         self.password = password
 
 def maxId(table):
-    queryId ="select max(user_id) as max from " + table
+    if table == "users":
+        queryId ="select max(user_id) as max from " + table
+    else:
+        queryId ="select max(id) as max from " + table
     sql = text(queryId)
     result = db.engine.execute(sql)
   
@@ -72,6 +75,34 @@ def register():
     result = db.engine.execute(sql)
         
     return jsonify("User created")
+
+@app.route('/createJob', methods=['POST'])
+def createJob():
+    
+    title= request.form['title']
+    location= request.form['location']
+    company= request.form['company']
+    salary= request.form['salary']
+    ratio= request.form['ratio']
+    description= request.form['description']
+
+    salary= salary.replace(" ","").split("-")
+    l1 = salary[0]
+    l1= l1.replace('K','000')
+    l1 = int(l1.replace('$',''))
+
+    l2 = salary[1]
+    l2= l2.replace('K','000')
+    l2 = int(l2.replace('$',''))
+
+    id=maxId('jobs')
+
+    query ="insert into jobs (id,job_title,salary_estimate_l1,salary_estimate_l2,job_description,rating,company_name,location) values ("+str(id)+",'"+title+"',"+str(l1)+","+str(l2)+",'"+description+"',"+str(ratio)+",'" + company + "','"+ location+"')"
+    print(query)
+    sql = text(query)
+    result = db.engine.execute(sql)
+        
+    return jsonify("Job created")
 
 @app.route('/loginUser', methods=['POST'])
 def login():
@@ -129,50 +160,106 @@ def salary(keyword):
     l2 = str(int(salary[1])*1000)
     print(l1)
     print(l2)
+
+    query ="select * from jobs where  salary_estimate_l1 < "+l1+" and salary_estimate_l2 > "+l2
+    sql = text(query)
+    result = db.engine.execute(sql)
+    jobsf = getArrayBD(result)
+    print(jobsf)
+    return jsonify(jobsf)
+
+    '''
     jobs =sqldf("select * from df where  salary_estimate_l1 < "+l1+" and salary_estimate_l2 > "+l2)
     #jobs =sqldf("select * from df where (salary_estimate_l1 > "+l1+" and salary_estimate_l2 > "+l2+") or (salary_estimate_l1 < "+l1+" and salary_estimate_l2 > "+l2+") or (salary_estimate_l1 < "+l1+" and salary_estimate_l2 < "+l2)
     jobsf = getArray(jobs)
     #print(jobsf)
     return jsonify(jobsf)
+    '''
 
 @app.route('/top/<keyword>')
 def top(keyword):
     load()
     limpiar()
+
+    query ="select * from jobs order by salary_estimate_l2 desc limit " + keyword
+    sql = text(query)
+    result = db.engine.execute(sql)
+    jobsf = getArrayBD(result)
+    print(jobsf)
+    return jsonify(jobsf)
+
+    '''
     jobs =sqldf("select * from df order by salary_estimate_l2 desc limit " + keyword)
+    print(jobs)
     jobsf = getArray(jobs)
     #print(jobsf)
     return jsonify(jobsf)
+    '''
 
 @app.route('/get/<keyword>')
 def getId(keyword):
     load()
     limpiar()
+
+    query ="select * from jobs where id = " + keyword
+    sql = text(query)
+    result = db.engine.execute(sql)
+    jobsf = getArrayBD(result)
+    print(jobsf)
+    return jsonify(jobsf)
+    '''
     jobs =sqldf("select * from df where job_number = " + keyword )
     jobsf = getArray(jobs)
     return jsonify(jobsf)
+    '''
 
 @app.route('/search/<keyword>')
 def searchKey(keyword):
     load()
     limpiar()
+
+    query ="select * from jobs where job_title like '%" + keyword + "%' or Location like '%" + keyword + "%'"
+    sql = text(query)
+    result = db.engine.execute(sql)
+    jobsf = getArrayBD(result)
+    print(jobsf)
+    return jsonify(jobsf)
+
+    '''
     jobs =sqldf("select * from df where job_title like '%" + keyword + "%' or Location like '%" + keyword + "%'")
     jobsf = getArray(jobs)
     
     return jsonify(jobsf)
+    '''
    # return render_template('datos.html',datos =jobs)
 
 
 
 
 #---------------------------AUXILIAR FUNCTIONS --------------------------
+def getArrayBD(jobs):
+    jobsf = []
+    for row in jobs:
+        job=[]
+        salary = "$" + str(row[2]/1000) + "K - $" + str(row[3]/1000) + "K"
+        job.append(row[1])
+        job.append(row[7])
+        job.append(row[6])
+        job.append(salary)
+        job.append(row[5])
+        job.append(row[4])
+        job.append(row[0])
+        jobsf.append(job)
+    
+    return jobsf
 
+    
 def getArray(jobs):
     jobs = jobs.to_json()
     jobs = json.loads(jobs)
     jobsf = []
    
-    
+ 
     for i in range(0,len(jobs['job_title'])):
         job=[]
         job.append(jobs['job_title'][str(i)])

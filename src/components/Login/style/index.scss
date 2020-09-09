@@ -49,10 +49,11 @@
       .custom-control {
         background-color: $primary-color;
       }
+      button {
+        @include buttons(30px, 90px);
+      }
     }
   }
 }
 
-a button {
-  @include buttons(30px, 90px);
-}
+
