@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import logo from "./assets/logo.png";
 import "./style/index.scss";
 import axios from "axios";
+import { Link } from 'react-router-dom';
+
 
 class index extends Component {
   constructor(props) {
