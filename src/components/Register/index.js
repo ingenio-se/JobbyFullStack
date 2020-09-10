@@ -43,6 +43,9 @@ export default class index extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         alert(responseJson);
+        if (responseJson.includes("User")) {
+          window.open("home", "_self");
+        }
       });
   }
   registerUser() {
@@ -53,6 +56,7 @@ export default class index extends Component {
       .then((resp) => {
         console.log(resp.data);
         alert(resp.data);
+      
       })
       .catch((err) => {
         console.log(err);
@@ -110,7 +114,7 @@ export default class index extends Component {
                 />
               </div>
 
-              <Link to={{ pathname: "/job/create", state: { texto: "Skip" } }}>
+             
                 <button
                   type="submit"
                   className="btn btn-primary btn-block"
@@ -118,7 +122,7 @@ export default class index extends Component {
                 >
                   Sign Up
                 </button>
-              </Link>
+           
 
               <p className="forgot-password text-right">
                 Already registered? <Link to={`/login`}>sign in</Link>
