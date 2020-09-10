@@ -38,6 +38,7 @@ def create_figure():
     axis_1.hist(x)
     axis_2.pie(y)
     return fig
+    
 
 '''
 @app.route('/data')
@@ -101,9 +102,10 @@ def searchKey(keyword):
         job.append(jobs['location'][str(i)])
         job.append(jobs['company_name'][str(i)])
         job.append(jobs['salary_estimate'][str(i)])
-        job.append(jobs['rating'][str(i)])
+        job.append(jobs['ESTRELLAS'][str(i)])
         job.append(jobs['job_description'][str(i)])
         job.append(jobs['job_number'][str(i)])
+        job.append(jobs['skills'][str(i)])
         jobsf.append(job)
     return jsonify(jobsf)
    # return render_template('datos.html',datos =jobs)
@@ -175,7 +177,7 @@ def limpiar():
     df.rating = df.rating.fillna(1)
     df['rating_val'] = df['rating']*0.1
     df['salary_mean_val'] = df['salary_mean']*((1/10000000)*(4**3))
-    df['ESTRELLAS'] = round(((df['salary_mean_val'] + df['rating_val'])/.255),1)
+    df['ESTRELLAS'] = round(((df['salary_mean_val'] + df['rating_val'])/.255))
 
     #BEST SORTED BY
     df = df.sort_values('ESTRELLAS', ascending = False)
