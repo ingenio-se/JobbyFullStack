@@ -17,8 +17,9 @@ function App() {
         <Route exact path="/home" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/job/:jobId" component={JobView} />
         <Route exact path="/job/create" component={CreateJob} />
+        <Route exact path="/job/:jobId" component={JobView} />
+        
       </Switch>
     </BrowserRouter>
   );

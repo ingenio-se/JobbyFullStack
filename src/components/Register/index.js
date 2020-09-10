@@ -44,7 +44,7 @@ export default class index extends Component {
       .then((responseJson) => {
         alert(responseJson);
         if (responseJson.includes("User")) {
-          window.open("home", "_self");
+          window.open("./home", "_self");
         }
       });
   }

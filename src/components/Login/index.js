@@ -38,7 +38,7 @@ export default class index extends Component {
       .then((responseJson) => {
         alert(responseJson);
         if (responseJson.includes("Bienvenido")) {
-          window.open("home", "_self");
+          window.open("./home", "_self");
         }
         /*response.json().then((body) => {
           this.setState({ imageURL: `http://localhost:8000/${body.file}` });

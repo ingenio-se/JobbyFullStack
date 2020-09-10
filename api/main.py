@@ -5,6 +5,7 @@ import json
 from flask import jsonify
 import pandas as pd
 import numpy as np
+import math
 from pandasql import sqldf
 from tabulate import tabulate
 
@@ -250,7 +251,9 @@ def upload():
             description = df.job_description[cont]
             for c in remove:
                 description=description.replace(c," ")
-
+            if ( df.rating[cont].isnumeric()== False):
+                df.rating[cont] =0
+                
             query = "INSERT INTO jobs(id, job_title, salary_estimate_l1, salary_estimate_l2, job_description, \
                     rating, company_name, location) VALUES ("+ str(cont) +",'" + df.job_title[cont] +"'," + str(df.salary_estimate_l1[cont]) +", " + str(df.salary_estimate_l2[cont]) +", '" + description + "', \
                     " + str(df.rating[cont]) +",'" + df.company_name[cont] +"', '" + df.location[cont] +"');"
