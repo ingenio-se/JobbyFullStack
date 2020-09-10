@@ -14,8 +14,14 @@ global df
 df=[]
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
+ENV = 'prod'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:80085700@localhost:5432/jobby"
+if ENV == 'dev':
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:80085700@localhost:5432/jobby"
+    
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://kypjuimrppxber:789b0622e2c424a26fbb46ec4da0347904b0c8c9caf204543bc0bcc835b553d3@ec2-107-22-7-9.compute-1.amazonaws.com:5432/dau09psmsu0vp7"
+    
 db = SQLAlchemy(app)
 
 
@@ -153,8 +159,8 @@ def locations():
 
 @app.route('/salary/<keyword>')
 def salary(keyword):
-    load()
-    limpiar()
+    #load()
+    #limpiar()
     salary = keyword.split("-")
     l1 = str(int(salary[0])*1000)
     l2 = str(int(salary[1])*1000)
@@ -165,7 +171,7 @@ def salary(keyword):
     sql = text(query)
     result = db.engine.execute(sql)
     jobsf = getArrayBD(result)
-    print(jobsf)
+    #print(jobsf)
     return jsonify(jobsf)
 
     '''
@@ -178,14 +184,14 @@ def salary(keyword):
 
 @app.route('/top/<keyword>')
 def top(keyword):
-    load()
-    limpiar()
+    #load()
+    #limpiar()
 
     query ="select * from jobs order by salary_estimate_l2 desc limit " + keyword
     sql = text(query)
     result = db.engine.execute(sql)
     jobsf = getArrayBD(result)
-    print(jobsf)
+    #print(jobsf)
     return jsonify(jobsf)
 
     '''
@@ -198,14 +204,14 @@ def top(keyword):
 
 @app.route('/get/<keyword>')
 def getId(keyword):
-    load()
-    limpiar()
+    #load()
+    #limpiar()
 
     query ="select * from jobs where id = " + keyword
     sql = text(query)
     result = db.engine.execute(sql)
     jobsf = getArrayBD(result)
-    print(jobsf)
+    #print(jobsf)
     return jsonify(jobsf)
     '''
     jobs =sqldf("select * from df where job_number = " + keyword )
@@ -215,14 +221,14 @@ def getId(keyword):
 
 @app.route('/search/<keyword>')
 def searchKey(keyword):
-    load()
-    limpiar()
+    #load()
+    #limpiar()
 
-    query ="select * from jobs where job_title like '%" + keyword + "%' or Location like '%" + keyword + "%'"
+    query ="select * from jobs where job_title like '%" + keyword + "%' or location like '%" + keyword + "%'"
     sql = text(query)
     result = db.engine.execute(sql)
     jobsf = getArrayBD(result)
-    print(jobsf)
+    print(query)
     return jsonify(jobsf)
 
     '''
@@ -233,6 +239,24 @@ def searchKey(keyword):
     '''
    # return render_template('datos.html',datos =jobs)
 
+@app.route('/uploadToDb')
+def upload():
+    load()
+    limpiar()
+    print(df)
+    jobs=sqldf("select * from df where job_number > 1")
+    cont=0
+    for row in df.job_number:
+        if cont !=1860:
+            query = "INSERT INTO jobs(id, job_title, salary_estimate_l1, salary_estimate_l2, job_description, \
+                    rating, company_name, location, headquarters, size, founded, type_ownership, industry, sector, \
+                    revenue, competitors, easy_apply) VALUES ("+ str(cont) +",'" + df.job_title[cont] +"'," + str(df.salary_estimate_l1[cont]) +", " + str(df.salary_estimate_l2[cont]) +", '" + df.job_description[cont] +"', \
+                    " + str(df.rating[cont]) +",'" + df.company_name[cont] +"', '" + df.location[cont] +"');"
+        
+            db.engine.execute(query)
+            #print(query)
+        cont+=1
+    return str(cont)
 
 
 
@@ -271,6 +295,8 @@ def getArray(jobs):
         job.append(jobs['job_number'][str(i)])
         jobsf.append(job)
     return jobsf
+
+
 def limpiar():
     global df
     df = df.dropna()
