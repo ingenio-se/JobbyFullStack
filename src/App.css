@@ -1,8 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap");
+
 * {
   top: 0;
   left: 0;
   right: 0;
+  font-family: "Libre Baskerville", serif;
 }
+
 .App {
   position: fixed;
   overflow: hidden;

@@ -1,0 +1,33 @@
+@import "../../../styles/sass/variables";
+
+.page-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: $tertiary-color;
+  display: flex;
+  align-content: center;
+  text-align: center;
+  justify-content: space-around;
+  article {
+    height: 300px;
+    width: 500px;
+    align-self: center;
+    background-color: $primary-color;
+    display: grid;
+    box-shadow: $shadow;
+    border-radius: $corners;
+    img {
+      justify-self: center;
+      border-radius: $corners;
+    }
+  }
+}
+
+.buttons-container {
+  button {
+    @include buttons(30px, 90px);
+  }
+
+  display: flex;
+  justify-content: space-around;
+}
