@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Header from "../Header";
 import Sidebar from "../SideBar";
 import Cards from "../Job_cards";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 class index extends Component {
@@ -18,9 +19,7 @@ class index extends Component {
     this.handleJobs = this.handleJobs.bind(this);
     
   }
-  static propTypes = {
-    prop: PropTypes,
-  };
+ 
   handleJobs(jobs){
     this.setState({
       jobs: [],
