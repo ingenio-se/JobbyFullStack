@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import "./style/index.scss";
 
 export default class index extends Component {
@@ -37,12 +38,8 @@ export default class index extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         alert(responseJson);
-        if (responseJson.includes("Bienvenido")) {
-          window.open("./home", "_self");
-        }
-        /*response.json().then((body) => {
-          this.setState({ imageURL: `http://localhost:8000/${body.file}` });
-        });*/
+        
+        
       });
   }
   render() {
@@ -101,6 +98,11 @@ export default class index extends Component {
 
               <p className="forgot-password text-right" id="pwd-forgot">
                 no <Link to={"/register"}>registered?</Link>
+              </p>
+              <p>
+              <Link to="/Home">
+              <button>Home</button>
+            </Link>
               </p>
             </form>
           </div>

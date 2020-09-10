@@ -172,7 +172,7 @@ def salary(keyword):
     sql = text(query)
     result = db.engine.execute(sql)
     jobsf = getArrayBD(result)
-    #print(jobsf)
+    print(jobsf)
     return jsonify(jobsf)
 
     '''
@@ -192,7 +192,7 @@ def top(keyword):
     sql = text(query)
     result = db.engine.execute(sql)
     jobsf = getArrayBD(result)
-    #print(jobsf)
+    print(sql)
     return jsonify(jobsf)
 
     '''
