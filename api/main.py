@@ -243,12 +243,11 @@ def searchKey(keyword):
 def upload():
     load()
     limpiar()
-    cont=0
+    cont=1
     for row in df.job_number:
         if cont !=1860:
             query = "INSERT INTO jobs(id, job_title, salary_estimate_l1, salary_estimate_l2, job_description, \
-                    rating, company_name, location, headquarters, size, founded, type_ownership, industry, sector, \
-                    revenue, competitors, easy_apply) VALUES ("+ str(cont) +",'" + df.job_title[cont] +"'," + str(df.salary_estimate_l1[cont]) +", " + str(df.salary_estimate_l2[cont]) +", '" + df.job_description[cont] +"', \
+                    rating, company_name, location) VALUES ("+ str(cont) +",'" + df.job_title[cont] +"'," + str(df.salary_estimate_l1[cont]) +", " + str(df.salary_estimate_l2[cont]) +", '" + df.job_description[cont]+ "', \
                     " + str(df.rating[cont]) +",'" + df.company_name[cont] +"', '" + df.location[cont] +"');"
             sql = text(query)
             result = db.engine.execute(sql)
