@@ -176,7 +176,7 @@ def limpiar():
     #IMPLEMENTACION DE LAS ESTRELLAS
     df.rating = df.rating.fillna(1)
     df['rating_val'] = df['rating']*0.1
-    df['salary_mean_val'] = df['salary_mean']*((1/10000000)*(4**3))
+    df['salary_mean_val'] = df['salary_mean']*((1/10000000)*(4**2.85))
     df['ESTRELLAS'] = round(((df['salary_mean_val'] + df['rating_val'])/.255))
 
     #BEST SORTED BY
