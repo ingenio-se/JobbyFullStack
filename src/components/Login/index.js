@@ -91,16 +91,18 @@ export default class index extends Component {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="btn btn-primary btn-block"
-                id="submit-btn"
-              >
-                Sign In
-              </button>
+              <Link to={`/home`}>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block"
+                  id="submit-btn"
+                >
+                  Sign In
+                </button>
+              </Link>
 
               <p className="forgot-password text-right" id="pwd-forgot">
-                no <Link to={"/register"}>registered?</Link>
+                no <Link to={"./register"}>registered?</Link>
               </p>
             </form>
           </div>
