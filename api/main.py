@@ -243,8 +243,6 @@ def searchKey(keyword):
 def upload():
     load()
     limpiar()
-    print(df)
-    jobs=sqldf("select * from df where job_number > 1")
     cont=0
     for row in df.job_number:
         if cont !=1860:
@@ -252,9 +250,9 @@ def upload():
                     rating, company_name, location, headquarters, size, founded, type_ownership, industry, sector, \
                     revenue, competitors, easy_apply) VALUES ("+ str(cont) +",'" + df.job_title[cont] +"'," + str(df.salary_estimate_l1[cont]) +", " + str(df.salary_estimate_l2[cont]) +", '" + df.job_description[cont] +"', \
                     " + str(df.rating[cont]) +",'" + df.company_name[cont] +"', '" + df.location[cont] +"');"
-        
-            db.engine.execute(query)
-            #print(query)
+            sql = text(query)
+            result = db.engine.execute(sql)
+            print(sql)
         cont+=1
     return str(cont)
 
