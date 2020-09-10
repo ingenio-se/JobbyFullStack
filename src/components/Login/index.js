@@ -7,36 +7,38 @@ export default class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-   }
-  
-   this.handleChange = this.handleChange.bind(this);
-   this.handleSubmit = this.handleSubmit.bind(this);
+      email: "",
+      password: "",
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   static propTypes = {
     prop: PropTypes,
   };
   handleChange({ target }) {
     this.setState({
-        [target.id]: target.value
+      [target.id]: target.value,
     });
     //console.log(this.state)
   }
-  handleSubmit(ev){
+  handleSubmit(ev) {
     ev.preventDefault();
-  
-      const data = new FormData();
-      data.append('email', this.state.email);
-      data.append('password', this.state.password);
-  
-      fetch('loginUser', {
-        method: 'POST',
-        body: data,
-      }).then((response) => response.json()).then((responseJson) => {
+
+    const data = new FormData();
+    data.append("email", this.state.email);
+    data.append("password", this.state.password);
+
+    fetch("loginUser", {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
         alert(responseJson);
-        if (responseJson.includes("Bienvenido")){
-          window.open('job/create',"_self")
+        if (responseJson.includes("Bienvenido")) {
+          window.open("job/create", "_self");
         }
         /*response.json().then((body) => {
           this.setState({ imageURL: `http://localhost:8000/${body.file}` });
@@ -45,8 +47,9 @@ export default class index extends Component {
   }
   render() {
     return (
-      <div className="form-container">
-        <div className="form-content">
+      <div className="view-container">
+        <div className="form-container">
+          <div className="form-content">
             <form onSubmit={this.handleSubmit}>
               <h3>Sign In</h3>
 
@@ -57,7 +60,7 @@ export default class index extends Component {
                   className="form-control"
                   placeholder="Enter email"
                   id="email"
-                  onChange = {this.handleChange}
+                  onChange={this.handleChange}
                 />
               </div>
 
@@ -68,41 +71,41 @@ export default class index extends Component {
                   className="form-control"
                   placeholder="Enter password"
                   id="password"
-                  onChange = {this.handleChange}
+                  onChange={this.handleChange}
                 />
               </div>
 
+              <div className="form-group">
+                <div className="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customCheck1"
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customCheck1"
+                  >
+                    Remember me
+                  </label>
+                </div>
+              </div>
 
-                  <div className="form-group">
-                    <div className="custom-control custom-checkbox">
-                      <input
-                        type="checkbox"
-                        className="custom-control-input"
-                        id="customCheck1"
-                      />
-                      <label className="custom-control-label" htmlFor="customCheck1">
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-                  
+              <button
+                type="submit"
+                className="btn btn-primary btn-block"
+                id="submit-btn"
+              >
+                Sign In
+              </button>
 
-           
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-block"
-                  id="submit-btn"
-                >
-                  Sign In
-                </button>
-      
               <p className="forgot-password text-right" id="pwd-forgot">
-                Forgot <a href="#">password?</a>
+                no <Link to={"/register"}>registered?</Link>
               </p>
             </form>
+          </div>
         </div>
       </div>
-
     );
   }
 }

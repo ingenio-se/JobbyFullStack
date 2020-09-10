@@ -1,59 +1,67 @@
 @import "../../../styles/sass/variables";
 
-.form-container {
-  height: 450px;
-  width: 380px;
-  background-color: $primary-color;
-  margin: 9% 37%;
-  border-radius: $corners;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.8);
-  .form-content {
-    height: 90%;
-    width: 86%;
-    margin: 7%;
-    form {
-      height: 100%;
-      display: grid;
-      align-content: space-between;
-      background-color: $primary-color;
-      & > * {
-        margin-bottom: 0;
-        background-color: $primary-color;
-      }
-      .form-group {
-        display: flex;
-        justify-content: space-between;
-      }
-      input {
-        height: 20px;
-        width: 60%;
-        right: 0;
-        border-radius: 5px;
-        background-color: white;
-      }
-      #customCheck1 {
-        width: auto;
-        height: 13px;
-        margin: 0;
-      }
-      label {
-        font-weight: 500;
-      }
-      a,
-      p {
-        margin: 0 auto;
-      }
-      label,
-      a,
-      p,
-      .custom-control {
-        background-color: $primary-color;
-      }
-      button {
-        @include buttons(30px, 90px);
-      }
-    }
+.view-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: $tertiary-color;
+  display: flex;
+  align-content: center;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  .form-container {
+    height: 450px;
+    width: 380px;
+    background-color: $primary-color;
+    border-radius: $corners;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.8);
   }
 }
 
-
+.form-content {
+  height: 90%;
+  width: 86%;
+  margin: 7%;
+  form {
+    height: 100%;
+    display: grid;
+    align-content: space-between;
+    background-color: $primary-color;
+    & > * {
+      margin-bottom: 0;
+      background-color: $primary-color;
+    }
+    .form-group {
+      display: flex;
+      justify-content: space-between;
+    }
+    input {
+      height: 20px;
+      width: 60%;
+      right: 0;
+      border-radius: 5px;
+      background-color: white;
+    }
+    #customCheck1 {
+      width: auto;
+      height: 13px;
+      margin: 0;
+    }
+    label {
+      font-weight: 500;
+    }
+    a,
+    p {
+      margin: 0 auto;
+    }
+    label,
+    a,
+    p,
+    .custom-control {
+      background-color: $primary-color;
+    }
+    button {
+      @include buttons(30px, 90px);
+    }
+  }
+}
