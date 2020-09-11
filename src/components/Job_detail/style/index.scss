@@ -5,22 +5,37 @@
   height: 430px;
   justify-content: center;
   align-items: center;
+  overflow: hidden scroll;
+  &::-webkit-scrollbar {
+    width: 5px;
+    color: yellow;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    width: 5px;
+    height: 15px;
+    background: #2e2945;
+  }
 }
 
 .job_container {
-  height: 380px;
+  min-height: 500px;
+  height: fit-content;
   width: 1000px;
+  margin-top: 850px;
+  padding: 20px 0;
   background-color: $cards-bg;
   border-radius: 8px;
   box-shadow: $shadow;
   & > div {
-    height: 340px;
+    height: 90%;
     width: 860;
     padding: 15px 80px 15px 80px;
     display: grid;
-    grid-template-rows: 20% 10% 55% 15%;
+    grid-template-rows: 7% 4% 75% 8% 6%;
   }
   article {
+    height: 80px;
     width: inherit;
     display: grid;
     align-items: center;
@@ -43,35 +58,36 @@
     justify-content: start;
     align-items: center;
     li {
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 700;
       list-style-type: none;
-    }
-  }
-  .scrollable {
-    overflow: hidden scroll;
-    &::-webkit-scrollbar {
-      width: 3px;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 30px;
-      width: 1px;
-      height: 15px;
-      background: $tertiary-color;
-    }
-    .wrapper::-webkit-scrollbar-track {
-      background: transparent;
     }
   }
   p {
     margin: 10px 0;
+  }
+  .tag-container {
+    display: flex;
+    margin: 0 0 10px;
+    span {
+      display: grid;
+      height: 25px;
+      min-width: 70px;
+      padding: 1px 8px;
+      width: fit-content;
+      place-items: center;
+      margin: 0 10px 0 0;
+      background-color: lighten($color: $primary-color, $amount: 10);
+      box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+    }
   }
   button {
     @include buttons(30px, 80px);
   }
   .buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    place-items: end center;
+    place-items: center;
   }
 }
 
