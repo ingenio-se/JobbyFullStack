@@ -19,7 +19,7 @@ app = Flask(__name__, static_folder='../build', static_url_path='/')
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/plot')
+@app.route('/plot.png')
 def plot_png():
     fig = create_figure()
     output = io.BytesIO()
@@ -37,6 +37,7 @@ def create_figure():
 
     axis_1.hist(x)
     axis_2.pie(y)
+    
     return fig
     
 
