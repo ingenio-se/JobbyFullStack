@@ -39,8 +39,9 @@ export default class index extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         alert(responseJson);
-        this.setState({ redirect: "/home" });
-        
+        if (responseJson.includes("Bienvenido")) {
+          this.setState({ redirect: "/home" });
+        }
       });
   }
   render() {
