@@ -209,18 +209,18 @@ def top(keyword):
 def getId(keyword):
     load()
     limpiar()
-
-    '''
-    query ="select * from jobs where id = " + keyword
-    sql = text(query)
-    result = db.engine.execute(sql)
-    jobsf = getArrayBD(result)
-    #print(jobsf)
-    return jsonify(jobsf)
-    '''
-    jobs =sqldf("select * from df where job_number = " + keyword )
-    jobsf = getArray(jobs)
-    return jsonify(jobsf)
+    if int(keyword) >=3000:
+        
+        query ="select * from jobs where id = " + keyword
+        sql = text(query)
+        result = db.engine.execute(sql)
+        jobsf = getArrayBD(result)
+        #print(jobsf)
+        return jsonify(jobsf)
+    else:
+        jobs =sqldf("select * from df where job_number = " + keyword )
+        jobsf = getArray(jobs)
+        return jsonify(jobsf)
     
 
 @app.route('/search/<keyword>')
@@ -238,7 +238,16 @@ def searchKey(keyword):
 
     jobs =sqldf("select * from df where job_title like '%" + keyword + "%' or Location like '%" + keyword + "%'")
     jobsf = getArray(jobs)
+
+    query ="select * from jobs where job_title like '%" + keyword + "%' or location like '%" + keyword + "%'"
+    sql = text(query)
+    result = db.engine.execute(sql)
+    jobsf2 = getArrayBD(result)
     
+    for job in jobsf2:
+        jobsf.append(job)
+    
+
     return jsonify(jobsf)
 
    # return render_template('datos.html',datos =jobs)
