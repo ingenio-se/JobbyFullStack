@@ -11,10 +11,11 @@ Base.query = db_session.query_property()
 
 app = Flask(__name__)
   
+'''
 def load_data(file_name):
     data = genfromtxt(file_name, delimiter=',', skip_header=1, converters={0: lambda s: str(s)})
     return data.tolist()
-
+'''
 class Jobs(Base):
     __tablename__ = 'jobs'
 
@@ -45,13 +46,14 @@ class Users(Base):
     creator = Column(Integer)
 
 def jobs(pregunton):
-    preg = db_session.query(Jobs.job_title.ilike(f'%{pregunton}%')).all()
+    preg = db_session.query(Companies.ubi.ilike(f'%{pregunton}%')).all()
     for data in preg:
         print(data)
 
 if __name__ == "__main__":
-    #jobs("id, job_title") #jobs("Health")
+    jobs("Health")
     file_name = 'static/DataAnalyst.csv'
+    '''
     data = load_data(file_name)
     
     for i in data:
@@ -60,6 +62,6 @@ if __name__ == "__main__":
             'company_name' : i[5]
         })
         db_session.add(record)
-    
+    '''
 
 #.filter(JobTitle.job_desc.like(prueba +'%'))

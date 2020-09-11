@@ -143,5 +143,16 @@
     "presets": [
       "react-app"
     ]
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "precache-manifest.298e3b7c3c1eb128e86d336e48dbb18a.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HuguinCastillo/JobbyFullStack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HuguinCastillo/JobbyFullStack/issues"
   }
 }
