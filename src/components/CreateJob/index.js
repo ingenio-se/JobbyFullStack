@@ -126,7 +126,7 @@ export default class index extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-
+              <div className="buttons-container">
               <button
                 type="submit"
                 className="btn btn-primary btn-block"
@@ -134,6 +134,10 @@ export default class index extends Component {
               >
                 Create
               </button>
+              <Link to="/home">
+                  <button>{this.props.location.state.texto}</button>
+                </Link>
+              </div>
             </form>
           </div>
         </div>

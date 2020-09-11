@@ -46,7 +46,7 @@ export default class index extends Component {
       .then((responseJson) => {
         alert(responseJson);
         if (responseJson.includes("User")) {
-          this.setState({ redirect: "/home" });
+          this.setState({ redirect: { pathname: "/job/create", state: { texto: "Skip" } } });
         }
       });
   }
