@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 // import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 //
 import axios from "axios";
@@ -13,6 +14,7 @@ export default class index extends Component {
       last_name: "",
       email: "",
       password: "",
+      redirect: null,
     };
     this.registerUser = this.registerUser.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -44,7 +46,7 @@ export default class index extends Component {
       .then((responseJson) => {
         alert(responseJson);
         if (responseJson.includes("User")) {
-          window.open("/home", "_self");
+          this.setState({ redirect: "/home" });
         }
       });
   }
@@ -63,6 +65,9 @@ export default class index extends Component {
       });
   }
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     return (
       <div className="view-container">
         <div className="form-container">

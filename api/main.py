@@ -102,7 +102,7 @@ def createJob():
     l2= l2.replace('K','000')
     l2 = int(l2.replace('$',''))
 
-    id=maxId('jobs')
+    id=maxId('jobs')+3000
 
     query ="insert into jobs (id,job_title,salary_estimate_l1,salary_estimate_l2,job_description,rating,company_name,location) values ("+str(id)+",'"+title+"',"+str(l1)+","+str(l2)+",'"+description+"',"+str(ratio)+",'" + company + "','"+ location+"')"
     print(query)
@@ -160,14 +160,15 @@ def locations():
 
 @app.route('/salary/<keyword>')
 def salary(keyword):
-    #load()
-    #limpiar()
+    load()
+    limpiar()
     salary = keyword.split("-")
     l1 = str(int(salary[0])*1000)
     l2 = str(int(salary[1])*1000)
     print(l1)
     print(l2)
 
+    '''
     query ="select * from jobs where  salary_estimate_l1 < "+l1+" and salary_estimate_l2 > "+l2
     sql = text(query)
     result = db.engine.execute(sql)
@@ -181,33 +182,35 @@ def salary(keyword):
     jobsf = getArray(jobs)
     #print(jobsf)
     return jsonify(jobsf)
-    '''
+  
 
 @app.route('/top/<keyword>')
 def top(keyword):
-    #load()
-    #limpiar()
+    load()
+    limpiar()
 
+    '''
     query ="select * from jobs order by salary_estimate_l2 desc limit " + keyword
     sql = text(query)
     result = db.engine.execute(sql)
     jobsf = getArrayBD(result)
     print(sql)
     return jsonify(jobsf)
-
     '''
+    
     jobs =sqldf("select * from df order by salary_estimate_l2 desc limit " + keyword)
     print(jobs)
     jobsf = getArray(jobs)
     #print(jobsf)
     return jsonify(jobsf)
-    '''
+    
 
 @app.route('/get/<keyword>')
 def getId(keyword):
-    #load()
-    #limpiar()
+    load()
+    limpiar()
 
+    '''
     query ="select * from jobs where id = " + keyword
     sql = text(query)
     result = db.engine.execute(sql)
@@ -218,26 +221,26 @@ def getId(keyword):
     jobs =sqldf("select * from df where job_number = " + keyword )
     jobsf = getArray(jobs)
     return jsonify(jobsf)
-    '''
+    
 
 @app.route('/search/<keyword>')
 def searchKey(keyword):
-    #load()
-    #limpiar()
-
+    load()
+    limpiar()
+    '''
     query ="select * from jobs where job_title like '%" + keyword + "%' or location like '%" + keyword + "%'"
     sql = text(query)
     result = db.engine.execute(sql)
     jobsf = getArrayBD(result)
     print(query)
     return jsonify(jobsf)
-
     '''
+
     jobs =sqldf("select * from df where job_title like '%" + keyword + "%' or Location like '%" + keyword + "%'")
     jobsf = getArray(jobs)
     
     return jsonify(jobsf)
-    '''
+
    # return render_template('datos.html',datos =jobs)
 
 @app.route('/uploadToDb')

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./style/index.scss";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 export default class index extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ export default class index extends Component {
       salary: "",
       ratio: "",
       description: "",
+      redirect: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -43,10 +45,14 @@ export default class index extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         alert(responseJson);
+        this.setState({ redirect: "/home" });
       });
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     return (
       <div className="view-container">
         <div className="form-container">

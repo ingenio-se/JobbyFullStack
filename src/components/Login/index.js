@@ -10,6 +10,7 @@ export default class index extends Component {
     this.state = {
       email: "",
       password: "",
+      redirect: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,11 +39,14 @@ export default class index extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         alert(responseJson);
-        
+        this.setState({ redirect: "/home" });
         
       });
   }
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     return (
       <div className="view-container">
         <div className="form-container">
@@ -100,9 +104,7 @@ export default class index extends Component {
                 no <Link to={"/register"}>registered?</Link>
               </p>
               <p>
-              <Link to="/Home">
-              <button>Home</button>
-            </Link>
+             
               </p>
             </form>
           </div>
