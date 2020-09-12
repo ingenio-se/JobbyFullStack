@@ -6,22 +6,24 @@
   right: 0;
   font-family: "Libre Baskerville", serif;
 }
-
 .App {
   position: fixed;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .body__container {
+  height: 100%;
   display: grid;
-  grid-template-columns: 20% 75%;
-  column-gap: 50px;
+  grid-template-columns: 26% 74%;
+  /* column-gap: 50px; */
 }
 
 .cards__cont {
   grid-column: 2;
-  overflow: scroll;
   height: 77vh;
+  overflow: scroll;
 }
 
 .cards__cont::-webkit-scrollbar {
